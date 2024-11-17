@@ -8,25 +8,25 @@ const tech_que = [
       "A hardware component of a computer",
       "A data storage technique",
     ],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 2,
     question: "What is the time complexity of binary search?",
     options: ["O(n)", "O(log n)", "O(n log n)", "O(1)"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 3,
     question: "Which data structure works on the principle of FIFO?",
     options: ["Stack", "Queue", "Linked List", "Tree"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 4,
     question: "Which of the following is NOT a programming paradigm?",
     options: ["Object-oriented", "Functional", "Procedural", "Modular"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 5,
@@ -37,20 +37,20 @@ const tech_que = [
       "To execute a block of code a fixed number of times",
       "To handle errors",
     ],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 6,
     question: "Which of the following is used for database management?",
     options: ["HTML", "CSS", "SQL", "XML"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 7,
     question:
       "Which sorting algorithm has an average time complexity of O(n log n)?",
     options: ["Insertion Sort", "Selection Sort", "Merge Sort", "Bubble Sort"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 8,
@@ -61,7 +61,7 @@ const tech_que = [
       "An efficient scheduling technique",
       "An error in compiling",
     ],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 9,
@@ -72,7 +72,7 @@ const tech_que = [
       "Star topology",
       "Mesh topology",
     ],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 10,
@@ -83,13 +83,13 @@ const tech_que = [
       "The use of inheritance",
       "The creation of classes",
     ],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 11,
     question: "Which type of memory is volatile?",
     options: ["ROM", "Hard Disk", "RAM", "Flash Memory"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 12,
@@ -100,20 +100,20 @@ const tech_que = [
       "To route data between different networks",
       "To prevent network failures",
     ],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 13,
     question:
       "Which type of machine learning algorithm is used for classification?",
     options: ["Supervised", "Unsupervised", "Reinforcement", "Unstructured"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 14,
     question: "Which of the following is an example of NoSQL database?",
     options: ["MySQL", "PostgreSQL", "MongoDB", "Oracle"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 15,
@@ -124,13 +124,13 @@ const tech_que = [
       "To encrypt data",
       "To manage memory",
     ],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 16,
     question: "Which of the following is a version control system?",
     options: ["Docker", "Git", "Kubernetes", "Jenkins"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 17,
@@ -141,26 +141,26 @@ const tech_que = [
       "Joint Syntax Object Notation",
       "JavaScript Organized Network",
     ],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 18,
     question:
       "Which method is used to retrieve data from a server in REST APIs?",
     options: ["POST", "GET", "PUT", "DELETE"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 19,
     question: "In which layer of the OSI model does IP addressing occur?",
     options: ["Application", "Presentation", "Network", "Data Link"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 20,
     question: "Which of the following is a feature of cloud computing?",
     options: ["Scalability", "Tangibility", "Non-volatility", "Linear growth"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 21,
@@ -172,14 +172,14 @@ const tech_que = [
       "To edit videos",
       "To connect networks",
     ],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 22,
     question:
       "Which of the following protocols is used for email transmission?",
     options: ["HTTP", "FTP", "SMTP", "SSL"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 23,
@@ -190,19 +190,19 @@ const tech_que = [
       "Reusing code from other projects",
       "Separating user interface from logic",
     ],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 24,
     question: "What is the maximum number of bits in an IPv6 address?",
     options: ["32", "128", "256", "64"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 25,
     question: "Which of the following is not a NoSQL database type?",
     options: ["Key-Value", "Column-family", "Relational", "Graph"],
-    selectedOption : ""
+    answeredOption : ""
   },
   {
     id: 26,
@@ -213,14 +213,14 @@ const tech_que = [
       "Change, Record, Use, Display",
       "Change, Remove, Update, Define",
     ],
-    selectedOption : ""
+    answeredOption : ""
 
   },
   {
     id: 27,
     question: "Which of these is a functional programming language?",
     options: ["Python", "JavaScript", "Haskell", "C++"],
-    selectedOption : ""
+    answeredOption : ""
 
   },
   {
@@ -232,21 +232,21 @@ const tech_que = [
       "Universal Resource List",
       "Uniform Retrieval Location",
     ],
-    selectedOption : ""
+    answeredOption : ""
 
   },
   {
     id: 29,
     question: "Which of the following is used to secure network communication?",
     options: ["DNS", "HTTPS", "IP", "HTTP"],
-    selectedOption : ""
+    answeredOption : ""
 
   },
   {
     id: 30,
     question: "Which of these data types can store a decimal value?",
     options: ["int", "char", "float", "boolean"],
-    selectedOption : ""
+    answeredOption : ""
 
   },
 ];

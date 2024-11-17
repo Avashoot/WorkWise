@@ -1,0 +1,1 @@
+export const URL= "https://prafuel-ai-career-assistant.hf.space/take-"

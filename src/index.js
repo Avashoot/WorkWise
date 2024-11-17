@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { Component, useContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+// import App from './App';
 import TakeTest from "./TakeTest"
 import Body from './Body'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Quiz } from './Quiz';
+import FormData from './FormData';
+import tech_que from './technical_questions';
+import { personalityContext } from './FormData';
+import { Outlet } from "react-router-dom";
+import Header from "./Header";
+
+// import {Quiz} from 'react-quiz-component';
+
+const App = ()=> {
+  
+  return (
+    <div className="App">
+      <Header/>
+      <Outlet/>
+    </div>
+  );
+}
 
 
 const appRouter = createBrowserRouter([
@@ -20,6 +38,21 @@ const appRouter = createBrowserRouter([
         path: "test",
         element : <TakeTest />,
       },
+      {
+        path: "personality",
+        element: <FormData/>
+
+      },
+      {
+        path: "interest",
+        element: <Quiz/>
+
+      },
+      {
+        path: "technical",
+        element: <Quiz/>
+
+      }
     ]
   },
 ])

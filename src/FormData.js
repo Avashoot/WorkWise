@@ -1,64 +1,72 @@
-import {useState , lazy, Suspense} from "react";
-import { useNavigate } from "react-router-dom";
-import PersonalityQuestions from "./GeneratePersonalityQuestions";
-
-// const PersonalityQuestions = lazy(import("./GeneratePersonalityQuestions"))
+import { useState } from "react";
+import { Quiz } from "./Quiz";
+import tech_que from "./technical_questions";
 
 const FormData = () => {
-  const URL = "https://prafuel-ai-based-career-consultant.hf.space/take-personality-test";
+  const URL_person ="https://prafuel-ai-career-assistant.hf.space/take-personality-test";
   
+    const URL_TECH = "https://prafuel-ai-career-assistant.hf.space/take-technical-test";
+
   const [formData] = useState({
     year: "final",
     branch: "Computer Science", // Ensure all required fields are initialized
+    domains: ["Machine Learning"]
   });
 
-//   const nevigate = useNavigate();
-
   const [personalityQuestions, setPersonalityQuestions] = useState(null);
-  console.log("Hello");
+  const [technicalQuestions, setTechnicalQuestions] = useState(null);
 
-  const handleClick = ()=>{
-    fetchData(formData);
-    // nevigate("/body/personalityquestions")
+  const handleClick = () => {
+    // fetchData();
+    fetchDataTech(formData);
+    // setPersonalityQuestions(tech_que)
+  };
+
+  const fetchDataTech = async (formData) =>
+  {
+    try{
+      const response = await fetch(URL_TECH, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const json = await response.json();
+      console.log(json);
+      setTechnicalQuestions(json.questions);
+
+    }catch (error) {
+      console.error("Error:", error);
+    }
   }
 
-  const fetchData = async (data) => {
-        
+  const fetchData = async () => {
     try {
-        const response = await fetch(URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-  
-  
-        const json = await response.json();
-        setPersonalityQuestions(json);
-        // console.log("Response:", json);
+      const response = await fetch(URL_person);
 
-      } catch (error) {
-        console.error("Error:", error);
-      }
-
-    };
-
-    console.log(personalityQuestions);
-  
-  
+      const json = await response.json();
+      console.log(json);
+      setPersonalityQuestions(json); // Assuming the API returns a `questions` array
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
-    <>
-    
-    <div className="font-bold bg-slate-400 w-fit hover:cursor-pointer" onClick={
-        handleClick
-    }>Generate Questions</div>
-    {/* {personalityQuestions && personalityQuestions.length > 0 ? (
-        <PersonalityQuestions questions={personalityQuestions} />
+    <div>
+      {technicalQuestions === null ? (
+        <div
+          className="font-bold bg-slate-400 w-fit hover:cursor-pointer"
+          onClick={handleClick}
+        >
+          Generate Questions
+        </div>
       ) : (
-        <div></div>
-      )} */}
-
-    </>
+        <Quiz tech_que={technicalQuestions} />
+      )}
+    </div>
   );
 };
 
