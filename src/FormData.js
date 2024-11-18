@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Quiz } from "./Quiz";
-import tech_que from "./technical_questions";
+import { first_URL, last_URL } from "./Constants";
 
 const FormData = () => {
-  const URL_person ="https://prafuel-ai-career-assistant.hf.space/take-personality-test";
-  
-    const URL_TECH = "https://prafuel-ai-career-assistant.hf.space/take-technical-test";
+  const URL_PERSON = first_URL + "personality" + last_URL;
+
+  const URL_TECH = first_URL + "technical" + last_URL;
 
   const [formData] = useState({
     year: "final",
@@ -13,19 +13,28 @@ const FormData = () => {
     domains: ["Machine Learning"]
   });
 
-  const [personalityQuestions, setPersonalityQuestions] = useState(null);
-  const [technicalQuestions, setTechnicalQuestions] = useState(null);
+  const [personalityQuestions, setPersonalityQuestions] = useState([]);
+  const [technicalQuestions, setTechnicalQuestions] = useState([]);
 
+  const [personalityQuestionsAnswers, setPersonalityQuestionsAnsers] = useState([]);
+  const [technicalQuestionsAnswers, setTechnicalQuestionsAnswers] = useState([]);
+
+  const [next, setNext] = useState(false);
+
+  useEffect(()=>{
+    console.log(technicalQuestions);
+  },[technicalQuestions]);
   const handleClick = () => {
     // fetchData();
+    fetchDataPersonality();
     fetchDataTech(formData);
     // setPersonalityQuestions(tech_que)
   };
 
-  const fetchDataTech = async (formData) =>
-  {
-    try{
-      const response = await fetch(URL_TECH, {
+  const fetchDataTech = async (formData) => {
+    try {
+
+      const response_technical = await fetch(URL_TECH, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,40 +42,67 @@ const FormData = () => {
         body: JSON.stringify(formData)
       });
 
-      const json = await response.json();
-      console.log(json);
-      setTechnicalQuestions(json.questions);
+      const jsonTechnical = await response_technical.json();
 
-    }catch (error) {
+      setTechnicalQuestions(jsonTechnical.questions);
+      console.log(technicalQuestions)
+
+
+    } catch (error) {
       console.error("Error:", error);
     }
   }
 
-  const fetchData = async () => {
+  const fetchDataPersonality = async () => {
     try {
-      const response = await fetch(URL_person);
+      const responce_personality = await fetch(URL_PERSON)
 
-      const json = await response.json();
-      console.log(json);
-      setPersonalityQuestions(json); // Assuming the API returns a `questions` array
+      const jsonPersonality = await responce_personality.json();
+
+      setPersonalityQuestions(jsonPersonality);
+
     } catch (error) {
-      console.error("Error:", error);
+      console.log("Error : ", error);
     }
-  };
+  }
+
+
 
   return (
     <div>
-      {technicalQuestions === null ? (
-        <div
-          className="font-bold bg-slate-400 w-fit hover:cursor-pointer"
-          onClick={handleClick}
-        >
-          Generate Questions
-        </div>
-      ) : (
-        <Quiz tech_que={technicalQuestions} />
-      )}
+      <div>
+        {personalityQuestions.length===0 ? (
+          <div
+            className="font-bold bg-slate-400 w-fit hover:cursor-pointer"
+            onClick={handleClick}
+          >
+            Generate Questions
+          </div>
+        ) : (
+          <div>
+            {next === false ? 
+              
+              <>
+                <Quiz tech_que={personalityQuestions} questionsAnswers={personalityQuestionsAnswers} setQuestionsAnsers={setPersonalityQuestionsAnsers} />
+                <div className="bg-green-500 p-5 text-white px-10 text-2xl rounded-full my-10 font-serif hover:cursor-pointer hover:bg-green-700 w-fit mx-auto" onClick={()=>setNext(true)
+                }>Next →</div>
+              </>  
+              :
+              <>
+                <Quiz tech_que={technicalQuestions} questionsAnswers={technicalQuestionsAnswers} setQuestionsAnsers={setTechnicalQuestionsAnswers} />
+                <div className="bg-green-500 p-5 text-white px-10 text-2xl rounded-full my-10 font-serif hover:cursor-pointer hover:bg-green-700 w-fit mx-auto" >Submit</div>
+              </> 
+            }
+            
+          </div>
+          
+        )}
+
+      
+      </div>
+      
     </div>
+
   );
 };
 

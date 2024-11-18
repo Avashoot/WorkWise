@@ -43,16 +43,7 @@ const appRouter = createBrowserRouter([
         element: <FormData/>
 
       },
-      {
-        path: "interest",
-        element: <Quiz/>
-
-      },
-      {
-        path: "technical",
-        element: <Quiz/>
-
-      }
+      
     ]
   },
 ])

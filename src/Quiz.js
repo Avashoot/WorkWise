@@ -4,16 +4,13 @@ import { useState, useEffect } from "react";
 
 export const Quiz = (props) => {
   const [answers, setAnswers] = useState([]);
-  const {tech_que} = props;
+  const {tech_que, setQuestionsAnsers} = props;
 
   
   useEffect(() => {
     console.log(answers);
   }, [answers]);
 
-  if(!tech_que){
-    return <div>Loading Questions ....</div>
-  }
 
   const handleClick = (questionId, question, options, selectedOption) => {
     const ans = {
@@ -37,6 +34,8 @@ export const Quiz = (props) => {
     }
 
     setAnswers(updatedAnswersData);
+    setQuestionsAnsers(updatedAnswersData);
+  
 
   };
 
@@ -46,6 +45,7 @@ export const Quiz = (props) => {
     return answer?.answeredOption || null;
   };
   return (
+    tech_que.length ?
     <div className=" flex justify-center flex-col w-8/12 mx-auto ">
       <div className="p-4">
         {tech_que.map((que, index) => {
@@ -81,7 +81,8 @@ export const Quiz = (props) => {
           );
         })}
       </div>
-      <div className="bg-green-500 p-5 text-white px-10 text-2xl rounded-full my-10 font-serif hover:cursor-pointer hover:bg-green-700 w-fit mx-auto">Submit</div>
+      
     </div>
+    : <></>
   );
 };
