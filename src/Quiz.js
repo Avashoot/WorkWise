@@ -4,13 +4,16 @@ import { useState, useEffect } from "react";
 
 export const Quiz = (props) => {
   const [answers, setAnswers] = useState([]);
-  const {tech_que, setQuestionsAnsers} = props;
+  const {tech_que, questionsAnswers, setQuestionsAnsers, nextVal, resetAns, setResetAns} = props;
 
   
+  
   useEffect(() => {
-    console.log(answers);
-  }, [answers]);
+    setAnswers([]);
+    console.log(questionsAnswers)
+  }, [nextVal]);
 
+  
 
   const handleClick = (questionId, question, options, selectedOption) => {
     const ans = {
