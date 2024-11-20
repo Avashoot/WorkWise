@@ -1,5 +1,6 @@
-import { useEffect, useState , } from "react";
-import {useNavigate} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AllCredentials, creadentialsPut, profilePut } from "./Constants";
 //SIGN UP/ REGISTER
 const Register = () => {
     const [firstName, setFirstName] = useState("");
@@ -7,36 +8,140 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [registeredData, setRegisteredData] = useState({})
+    const [isDisabled, setIsDisabled] = useState(true);
+    const [allCredentials, setAllCredentials] = useState([])
+    // const [registeredData, setRegisteredData] = useState({})
 
     useEffect(() => {
-        console.log(registeredData);
-    }, [registeredData])
+        console.log(allCredentials);
+    }, [allCredentials])
 
     const navigate = useNavigate();
 
+    const putCredentials = async (data, email) => {
+        try {
+
+            const response = await fetch(creadentialsPut + email, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to save credentials: ${response.statusText}`);
+            }
+
+        } catch (error) {
+            console.error("Error in putCredentials:", error);
+            throw error;
+        }
+    }
+
+    const putProfile = async (data, email) => {
+        try {
+            const response = await fetch(profilePut + email, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to save profile: ${response.statusText}`);
+            }
+        } catch (error) {
+            console.error("Error in putProfile:", error);
+            throw error; // Re-throw to handle higher up.
+        }
+    }
+
+    const getCredentials = async () => {
+        try {
+            const responce = await fetch(AllCredentials);
+            const jsonData = await responce.json();
+            setAllCredentials(jsonData);
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+
     const handleSubmit = () => {
-        const data = {
-            firstName: firstName,
-            lastName: lastName,
+        const credentialsData = {
             email: email,
             password: password
-        }
-        if (firstName.trim() !== "" && lastName.trim() !== "" && email.trim() !== "" && password !== "" && confirmPassword !== "" && password === confirmPassword) {
-            setRegisteredData(data);
-            console.log(registeredData);
-            setFirstName("");
-            setLastName("");
-            setEmail("");
-            setPassword("");
-            setConfirmPassword("");
-            navigate("/signin");
+        };
+    
+        const profileData = {
+            firstName: firstName,
+            lastName: lastName,
+            domains : []
+        };
+    
+        getCredentials()
+            .then(() => {
+                // Use the state directly after it has been set
+                const containsUser = allCredentials.some((data) => data.email === credentialsData.email);
+    
+                if (
+                    firstName.trim() !== "" &&
+                    lastName.trim() !== "" &&
+                    email.trim() !== "" &&
+                    password !== "" &&
+                    confirmPassword !== "" &&
+                    password === confirmPassword &&
+                    !containsUser
+                ) {
+                    // Chain API calls to ensure correct execution order
+                    putCredentials(credentialsData, credentialsData.email)
+                        .then(() => putProfile(profileData, credentialsData.email))
+                        .then(() => {
+                            // Clear the form only after the API calls succeed
+                            setFirstName("");
+                            setLastName("");
+                            setEmail("");
+                            setPassword("");
+                            setConfirmPassword("");
+                            navigate("/signin");
+                        })
+                        .catch((error) => {
+                            console.error("Error during registration:", error);
+                            alert("An error occurred during registration. Please try again.");
+                        });
+                } else {
+                    if (containsUser) {
+                        alert("User already registered. Please login.");
+                    } else {
+                        alert("Please enter all the data or check the password confirmation.");
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching credentials:", error);
+                alert("Failed to fetch credentials. Please try again later.");
+            });
+    };
+    
+
+    useEffect(() => {
+        if (
+            firstName.trim() &&
+            lastName.trim() &&
+            email.trim() &&
+            password &&
+            confirmPassword &&
+            password === confirmPassword
+        ) {
+            setIsDisabled(false); // Enable the button
         } else {
-            alert("Please entere all the data or please check the password and confirmed password")
+            setIsDisabled(true); // Disable the button
         }
-
-
-    }
+    }, [firstName, lastName, email, password, confirmPassword]);
 
     return (
         <>
@@ -75,11 +180,17 @@ const Register = () => {
                         </div>
                     </div>
                 </div>
-                
 
 
-                <div className="text-center font-serif text-pretty text-xl p-4 bg-blue-500 w-fit mx-auto rounded-xl px-8 text-white hover:cursor-pointer hover:bg-blue-400" onClick={handleSubmit}>     Sign Up    
-                </div>
+
+                <button
+                    className={`text-center font-serif text-xl p-4 w-fit mx-auto rounded-xl px-8 text-white hover:cursor-pointer ${isDisabled ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-400 "
+                        }`}
+                    onClick={isDisabled ? null : handleSubmit} // Prevent action when disabled
+                    disabled={isDisabled} // Native button attribute
+                >
+                    Sign Up
+                </button>
 
             </div>
 

@@ -16,6 +16,8 @@ import Profile from './Profile';
 import Login from './Login';
 import Register from './Register';
 import userContext from './userContext';
+import UpdateProfileData from './UpdateProfile';
+
 
 // import {Quiz} from 'react-quiz-component';
 
@@ -24,6 +26,7 @@ const App = ()=> {
   const [signInedUserData, setSignInedUserData] = useState({
     firstName : "SIGN IN",
     imageUrl : "https://upload.wikimedia.org/wikipedia/commons/b/b5/Windows_10_Default_Profile_Picture.svg",
+    domains : []
   })
   
   return (
@@ -65,8 +68,12 @@ const appRouter = createBrowserRouter([
         element: <Register/>
       },
       {
-        path:"/profile",
+        path:"profile",
         element:<Profile/>
+      },
+      {
+        path:"updateprofile",
+        element: <UpdateProfileData/>
       }
       
     ]

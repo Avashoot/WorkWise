@@ -1,39 +1,75 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import userContext from "./userContext";
-import demoCredentials from "./demoEmails";
+
+import { AllCredentials, profileGet } from "./Constants";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const {setSignInedUserData} = useContext(userContext);
 
+
     const navigate = useNavigate()
 
-    const handleSubmit = ()=>{
-        const userData = demoCredentials.find(
-            (data) => data.email === email && data.password === password
-        );
 
-        if (!userData) {
-            alert("Invalid Email or Password. Please check your credentials.");
-        } else {
-            // Update the context with the user's data
-            setSignInedUserData({
-                firstName: userData.firstName,
-                email: userData.email,
-                id: userData.id,
-                imageUrl: userData.imageUrl,
-            });
-            navigate("/")
-            alert(`Welcome, ${userData.firstName}!`);
+
+    const getCredentials = async () => {
+        try {
+            const response = await fetch(AllCredentials);
+            const jsonData = await response.json();
+            return jsonData; // Return the fetched data
+        } catch (error) {
+            console.error("Error fetching credentials:", error);
+            throw new Error("Failed to fetch credentials.");
+        }
+    };
+
+    const getProfile = async (email)=>{
+        try {
+
+            const responce = await fetch(profileGet + email);
+            const jsonData = await responce.json();
+            console.log(jsonData)
+            return jsonData
+            
+        } catch (error) {
+            console.error("Error fetching profile data:", error);
+            throw new Error("Failed to fetch profile data.");
         }
     }
+
+    const handleSubmit = () => {
+        const credentialsData = {
+            email: email,
+            password: password,
+        };
+    
+        getCredentials().then((fetchedCredentials) => {
+            // Use fetched credentials directly instead of relying on state
+            const containsUser = fetchedCredentials.find(
+                (data) =>
+                    data.email === credentialsData.email &&
+                    data.password === credentialsData.password // Also match the password
+            );
+    
+            if (!containsUser) {
+                alert("Invalid Email or Password. Please check your credentials.");
+            } else {
+                getProfile(credentialsData.email).then((proData) => {
+                    setSignInedUserData(proData);
+                    navigate("/");
+                    alert(`Welcome, ${proData.firstName}!`);
+                });
+            }
+        });
+    };
+    
 
     return (
         <>
             <div className="bg-gradient-to-b from-customBlue flex flex-col mx-auto w-5/12 rounded-2xl p-10 shadow-xl shadow-slate-600 justify-center text-white my-28">
-                <div className="text-center font-light p-4  font-serif text-3xl">SIGN UP</div>
+                <div className="text-center font-light p-4  font-serif text-3xl">SIGN IN</div>
                 <div className="w-auto font-serif font-lite">
                     
                     
