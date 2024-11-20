@@ -30,18 +30,18 @@ const FetchData = () => {
     const fetchDataTech = async (formData) => {
         try {
 
-            // const response_technical = await fetch(URL_TECH, {
-            //   method: 'POST',
-            //   headers: {
-            //     'Content-Type': 'application/json',
-            //   },
-            //   body: JSON.stringify(formData)
-            // });
-            const responce_Default = await fetch(URL_PERSON)
+            const response_technical = await fetch(URL_TECH, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(formData)
+            });
+            // const responce_Default = await fetch(URL_PERSON)
 
-            const jsonTechnical = await responce_Default.json();
+            const jsonTechnical = await response_technical.json();
 
-            setTechnicalQuestions(jsonTechnical);
+            setTechnicalQuestions(jsonTechnical.questions);
             console.log(technicalQuestions)
 
 

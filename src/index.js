@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 // import App from './App';
@@ -12,15 +12,27 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import FetchData from './FetchData';
+import Profile from './Profile';
+import Login from './Login';
+import Register from './Register';
+import userContext from './userContext';
 
 // import {Quiz} from 'react-quiz-component';
 
 const App = ()=> {
+
+  const [signInedUserData, setSignInedUserData] = useState({
+    firstName : "SIGN IN",
+    imageUrl : "https://upload.wikimedia.org/wikipedia/commons/b/b5/Windows_10_Default_Profile_Picture.svg",
+  })
   
   return (
     <div className="App">
-      <Header/>
-      <Outlet/>
+      <userContext.Provider value={{signInedUserData, setSignInedUserData}}>
+        <Header/>
+        <Outlet/>
+      </userContext.Provider>
+      
     </div>
   );
 }
@@ -44,6 +56,18 @@ const appRouter = createBrowserRouter([
         element: <FetchData/>
 
       },
+      {
+        path:"signin",
+        element:<Login/>
+      },
+      {
+        path:"signup",
+        element: <Register/>
+      },
+      {
+        path:"/profile",
+        element:<Profile/>
+      }
       
     ]
   },
