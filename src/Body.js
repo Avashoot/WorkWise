@@ -14,7 +14,7 @@ const Body = () => {
         
       </div>
       <div className="realtive text-richBlack p-4 hover:cursor-pointer hover:text-gray-300 invert-0 font-serif text-center text-4xl bg-columbiaBlue w-fit flex justify-center mx-auto rounded-2xl hover:bg-customBlue">
-          <Link to={"/test"}>Get Started</Link>  
+          <Link to={"/starttest"}>Get Started</Link>  
         </div>
       
     </>

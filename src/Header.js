@@ -24,7 +24,7 @@ const Header = ()=>{
                 
                 <div className="flex flex-wrap font-serif font-lite">
                     
-                    <div className=" m-3 p-4 hover:cursor-pointer hover:text-gray-300">Your Schedule</div>
+                    <div className=" m-3 p-4 hover:cursor-pointer hover:text-gray-300"> <Link to={"/report"}>Career Report</Link> </div>
                     {/* <div className=" m-3 p-4 hover:cursor-pointer hover:text-gray-300"> <Link to={"/updateprofile"}>UpdateProfile</Link> </div>
                     <div className=" m-3 p-4 hover:cursor-pointer hover:text-gray-300"><Link to={"/profile"}>Profile</Link> </div> */}
                     <div className="ml-2 my-3 p-4 hover:cursor-pointer hover:text-gray-300" onClick={handleSignIn}>{signInedUserData.firstName}</div>

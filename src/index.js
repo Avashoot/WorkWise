@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 // import App from './App';
-import TakeTest from "./TakeTest"
+
 import Body from './Body'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // import { Quiz } from './Quiz';
@@ -17,6 +17,7 @@ import Login from './Login';
 import Register from './Register';
 import userContext from './userContext';
 import UpdateProfileData from './UpdateProfile';
+import Report from './Report';
 
 
 // import {Quiz} from 'react-quiz-component';
@@ -28,6 +29,8 @@ const App = ()=> {
     imageUrl : "https://upload.wikimedia.org/wikipedia/commons/b/b5/Windows_10_Default_Profile_Picture.svg",
     domains : []
   })
+
+  
   
   return (
     <div className="App">
@@ -51,11 +54,7 @@ const appRouter = createBrowserRouter([
         element : <Body/>
       },
       {
-        path: "test",
-        element : <TakeTest />,
-      },
-      {
-        path: "personality",
+        path: "starttest",
         element: <FetchData/>
 
       },
@@ -74,6 +73,10 @@ const appRouter = createBrowserRouter([
       {
         path:"updateprofile",
         element: <UpdateProfileData/>
+      },
+      {
+        path: "report",
+        element: <Report/>
       }
       
     ]

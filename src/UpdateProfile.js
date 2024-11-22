@@ -102,7 +102,7 @@ const UpdateProfileData = () => {
     };
 
     return (
-        <div className="p-6 max-w-4xl mx-auto bg-white rounded-md shadow-lg my-30">
+        <div className="p-6 max-w-4xl mx-auto bg-white rounded-md shadow-lg shadow-black mt-24 font-serif">
             <h1 className="text-2xl font-bold mb-6 text-gray-800">
                 Update Profile
             </h1>
@@ -235,7 +235,7 @@ const UpdateProfileData = () => {
             </div>
             <button
                 onClick={handleSaveChanges}
-                className="mt-6 w-full py-2 px-4 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700"
+                className="mt-6 w-full py-2 px-4 bg-customBlue text-white font-medium rounded-md hover:bg-indigo-700"
             >
                 Save Changes
             </button>

@@ -71,7 +71,7 @@ const Profile = () => {
                     </div>
                     <div className="text-xl font-serif font-light flex justify-between flex-wrap"> Interested Domain :
                         <div className="w-80 ">
-                            {domains.join(", ")}
+                        {domains && domains.length > 0 ? domains.join(", ") : "No domains specified"}
 
                         </div>
 

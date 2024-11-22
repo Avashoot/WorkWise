@@ -12,7 +12,7 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-
+    
 
     const getCredentials = async () => {
         try {
@@ -45,25 +45,34 @@ const Login = () => {
             password: password,
         };
     
-        getCredentials().then((fetchedCredentials) => {
-            // Use fetched credentials directly instead of relying on state
-            const containsUser = fetchedCredentials.find(
-                (data) =>
-                    data.email === credentialsData.email &&
-                    data.password === credentialsData.password // Also match the password
-            );
+        getCredentials()
+            .then((fetchedCredentials) => {
+                const containsUser = fetchedCredentials.find(
+                    (data) =>
+                        data.email === credentialsData.email &&
+                        data.password === credentialsData.password
+                );
     
-            if (!containsUser) {
-                alert("Invalid Email or Password. Please check your credentials.");
-            } else {
-                getProfile(credentialsData.email).then((proData) => {
+                if (!containsUser) {
+                    alert("Invalid Email or Password. Please check your credentials.");
+                    return;
+                }
+    
+                return getProfile(credentialsData.email);
+            })
+            .then((proData) => {
+                if (proData) {
                     setSignInedUserData(proData);
                     navigate("/");
                     alert(`Welcome, ${proData.firstName}!`);
-                });
-            }
-        });
+                }
+            })
+            .catch((error) => {
+                console.error("Error during login process:", error);
+                alert("Something went wrong. Please try again later.");
+            });
     };
+    
     
 
     return (

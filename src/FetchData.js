@@ -1,20 +1,15 @@
-import { useState } from "react";
-import { first_URL, last_URL } from "./Constants";
+import { useState, useContext } from "react";
 import FormData from "./FormData";
-import AddFormData from "./AddFormData";
+import { getPersonalityTestQuestions, getTechnicalTestQuestions } from "./Constants";
+import userContext from "./userContext";
 
 
 const FetchData = () => {
-    const URL_PERSON = first_URL + "personality" + last_URL;
+    const URL_PERSON = getPersonalityTestQuestions;
 
-    const URL_TECH = first_URL + "technical" + last_URL;
+    const URL_TECH = getTechnicalTestQuestions;
 
-
-    const [formData, setFormData] = useState({
-        year: "final",
-        branch: "Computer Science", // Ensure all required fields are initialized
-        domains: ["Machine Learning"]
-    });
+    const {signInedUserData}  = useContext(userContext)
 
 
     const [personalityQuestions, setPersonalityQuestions] = useState([]);
@@ -22,22 +17,16 @@ const FetchData = () => {
 
     const handleClick = () => {
         // fetchData();
-        fetchDataPersonality();
-        fetchDataTech(formData);
+        fetchDataPersonality(signInedUserData.email);
+        fetchDataTech(signInedUserData.email);
         // setPersonalityQuestions(tech_que)
     };
 
-    const fetchDataTech = async (formData) => {
+    const fetchDataTech = async (email) => {
         try {
 
-            const response_technical = await fetch(URL_TECH, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(formData)
-            });
-            // const responce_Default = await fetch(URL_PERSON)
+            const response_technical = await fetch(URL_TECH+ email)
+
 
             const jsonTechnical = await response_technical.json();
 
@@ -50,13 +39,13 @@ const FetchData = () => {
         }
     }
 
-    const fetchDataPersonality = async () => {
+    const fetchDataPersonality = async (email) => {
         try {
-            const responce_personality = await fetch(URL_PERSON)
+            const responce_personality = await fetch(URL_PERSON + email)
 
             const jsonPersonality = await responce_personality.json();
 
-            setPersonalityQuestions(jsonPersonality);
+            setPersonalityQuestions(jsonPersonality.questions);
 
         } catch (error) {
             console.log("Error : ", error);
@@ -69,12 +58,11 @@ const FetchData = () => {
             <div>
                 {personalityQuestions.length === 0 ?
                     <>
-                        <AddFormData setFormData={(data)=>setFormData(data)} formData={formData}/>
                         <div
                             className="font-bold bg-slate-400 w-fit hover:cursor-pointer mx-10 my-5 p-5 rounded-xl text-white hover:bg-slate-600"
                             onClick={handleClick}
                         >
-                            Generate Questions
+                            Start Test
                         </div>
                     </> :
                     <FormData personalityQuestions={personalityQuestions} technicalQuestions={technicalQuestions} />
